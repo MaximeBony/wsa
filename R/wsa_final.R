@@ -1,3 +1,6 @@
+# Getting starting time
+start_time <- Sys.time()
+
 ###############################################################
 ## Part 1: Setting up working directory, files and libraries ##
 ###############################################################
@@ -145,3 +148,12 @@ min_data_frame <- data_seventeen[,c(3,4,5,12)]
 seventeen_predict <- predict(min_linear_model, min_data_frame)
 # Saving values in a csv file
 write.csv(seventeen_predict, file = "seventeen.csv")
+
+
+
+# Getting end time
+end_time <- Sys.time()
+
+# Getting time needed to run the statistical analysis
+time_spent <- end_time - start_time
+print(time_spent)
