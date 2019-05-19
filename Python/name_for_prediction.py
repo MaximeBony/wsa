@@ -1,4 +1,8 @@
 import csv
+import time
+
+# Getting starting time
+start_time = time.time()
 
 id_score_dict = dict()
 player_id_dict = dict()
@@ -47,3 +51,9 @@ for k, v in sorted(id_score_dict.items()):
     # writing rows in the csv file
     # For the predicted rank, getting the index of the value of points in the sorted list
     writer.writerow({head[0]: player_id_dict[str(int(k)-1)], head[1]: v, head[2]: list_scores.index(float(v))+1})
+
+# Getting end time
+end_time = time.time()
+
+# Printing time needed to run the script
+print(end_time-start_time)
