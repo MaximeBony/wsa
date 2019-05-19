@@ -15,6 +15,8 @@ data_file <- read.csv(file="pgatour_cleaned.csv", header=TRUE, sep=",")
 library(car)
 library(RcmdrMisc)
 library(multcomp)
+library(FactoMineR)
+library(paran)
 
 
 
@@ -31,8 +33,6 @@ data_sixteen <- data_file[which(data_file$Year == 2016),]
 # Subset of 2017
 data_seventeen <- data_file[which(data_file$Year == 2017),]
 
-print(data_seventeen)
-
 # Subset containing 2007, 2012 and 2017
 data_anova <- subset(data_file, subset=Year == 2007 | Year == 2012 | Year == 2017)
 
@@ -45,6 +45,9 @@ data_anova <- within(data_anova, {
 data_seventeen_z <- as.data.frame(scale(data_seventeen[,c(3,4,5,6,7,8,9,10,11,12,13,15)]))
 # Adding names column to the standardized dataframe
 data_seventeen_z$NAME = data_seventeen$NAME
+
+# Numeric subset for Principal Component Analysis
+data_pca <- data_file[,c(3,4,5,6,7,8,9,10,11,12,13,15)]
 
 
 
@@ -148,6 +151,28 @@ min_data_frame <- data_seventeen[,c(3,4,5,12)]
 seventeen_predict <- predict(min_linear_model, min_data_frame)
 # Saving values in a csv file
 write.csv(seventeen_predict, file = "seventeen.csv")
+
+
+
+##########################################
+## Part 8: Principal Component Analysis ##
+##########################################
+
+# Parallel analysis to find out how much components should be retained
+paran(data_pca, graph=TRUE, centile=95)
+# 3 components should be retained
+
+# Preparing pdf file to save the clustering
+pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\pca.pdf", width=10, height=10, paper='special')
+
+# Principal component analysis
+PCA(data_pca, scale.unit = TRUE, ncp = 3, ind.sup = NULL,
+    quanti.sup = NULL, quali.sup = NULL, row.w = NULL,
+    col.w = NULL, graph = TRUE, axes = c(1,2))
+
+# Saving pdf file
+dev.off()
+
 
 
 
