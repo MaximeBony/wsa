@@ -47,7 +47,9 @@ data_seventeen_z <- as.data.frame(scale(data_seventeen[,c(3,4,5,6,7,8,9,10,11,12
 data_seventeen_z$NAME = data_seventeen$NAME
 
 # Numeric subset for Principal Component Analysis
-data_pca <- data_file[,c(3,4,5,6,7,8,9,10,11,12,13,15)]
+data_pca <- data_seventeen[,c(2,3,4,5,6,7,8,9,10,11,12,13,15)]
+row.names(data_pca) <- as.character(data_pca$NAME)
+data_pca$NAME <- NULL
 
 
 
@@ -163,7 +165,7 @@ paran(data_pca, graph=TRUE, centile=95)
 # 3 components should be retained
 
 # Preparing pdf file to save the clustering
-pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\pca.pdf", width=10, height=10, paper='special')
+pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\pca.pdf", width=15, height=10, paper='special')
 
 # Principal component analysis
 PCA(data_pca, scale.unit = TRUE, ncp = 3, ind.sup = NULL,
