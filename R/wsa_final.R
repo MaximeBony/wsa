@@ -120,11 +120,11 @@ dev.off()
 
 
 #################################
-## Part 7: Logistic regression ##
+## Part 7: Linear regression ##
 #################################
 
 # Full linear model
-full_linear_model <- lm(POINTS ~ ROUNDS + SCORING + DRIVE_DISTANCE + FWY_. + GIR_. + SG_P + SG_TTG + SG_T + TOP.10, data = data_ten)
+full_linear_model <- lm(POINTS ~ ROUNDS + SCORING + DRIVE_DISTANCE + FWY_. + GIR_. + SG_P + SG_TTG + SG_T + TOP.10 + X1ST, data = data_ten)
 
 # Model summary
 summary(full_linear_model)
@@ -136,7 +136,7 @@ summary(full_linear_model)
 # - TOP.10 (p < 0.01)
 
 # Reduced linear model
-min_linear_model <- lm(POINTS ~ ROUNDS + SCORING + DRIVE_DISTANCE + TOP.10, data = data_ten)
+min_linear_model <- lm(POINTS ~ ROUNDS + SCORING + GIR_. + TOP.10 + X1ST, data = data_ten)
 
 # Reduced model summary
 summary(min_linear_model)
@@ -147,7 +147,7 @@ anova(min_linear_model, full_linear_model)
 
 # Predicting 2017 PGA Tour ranking
 # Creating dataframe containing only predicting variables
-min_data_frame <- data_seventeen[,c(3,4,5,12)]
+min_data_frame <- data_seventeen[,c(3,4,5,7,12,13)]
 
 # Predict values for 2017
 seventeen_predict <- predict(min_linear_model, min_data_frame)
@@ -160,12 +160,21 @@ write.csv(seventeen_predict, file = "seventeen.csv")
 ## Part 8: Principal Component Analysis ##
 ##########################################
 
+# Preparing pdf file to save the parallel analysis
+pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\parallel_analysis.pdf", width=10, height=10, paper='special')
+
 # Parallel analysis to find out how much components should be retained
 paran(data_pca, graph=TRUE, centile=95)
 # 3 components should be retained
 
-# Preparing pdf file to save the clustering
+# Saving pdf file
+dev.off()
+
+# Preparing pdf file to save the PCA
 pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\pca.pdf", width=15, height=10, paper='special')
+
+# Large view of pca
+#pdf("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Analytics\\Projet\\pca_large.pdf", width=20, height=10, paper='special')
 
 # Principal component analysis
 PCA(data_pca, scale.unit = TRUE, ncp = 3, ind.sup = NULL,
