@@ -149,10 +149,15 @@ anova(min_linear_model, full_linear_model)
 # Creating dataframe containing only predicting variables
 min_data_frame <- data_seventeen[,c(3,4,5,7,12,13)]
 
+# Predict values for 2017 with full model
+full_data_frame <- data_seventeen[,c(3,4,5,6,7,8,9,10,11,12,13)]
+seventeen_full_predict <- predict(full_linear_model, full_data_frame)
+write.csv(seventeen_full_predict, file = "seventeen_final_full.csv")
+
 # Predict values for 2017
 seventeen_predict <- predict(min_linear_model, min_data_frame)
 # Saving values in a csv file
-write.csv(seventeen_predict, file = "seventeen.csv")
+write.csv(seventeen_predict, file = "seventeen_final_min.csv")
 
 
 
