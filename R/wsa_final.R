@@ -11,6 +11,9 @@ setwd("C:\\Users\\Maxime\\Documents\\UNIL 2018-2019\\2. Printemps\\Webscale Anal
 # Getting PGA Tour data from csv file
 data_file <- read.csv(file="pgatour_cleaned.csv", header=TRUE, sep=",")
 
+# Getting 2017 players values for all years
+data_players_seventeen_means <- read.csv(file="seventeen_players_means.csv", header=TRUE, sep=",")
+
 # Loading libraries
 library(car)
 library(RcmdrMisc)
@@ -147,7 +150,7 @@ anova(min_linear_model, full_linear_model)
 
 # Predicting 2017 PGA Tour ranking
 # Creating dataframe containing only predicting variables
-min_data_frame <- data_seventeen[,c(3,4,5,7,12,13)]
+min_data_frame <- data_seventeen[,c(3,4,7,12,13)]
 
 # Predict values for 2017 with full model
 full_data_frame <- data_seventeen[,c(3,4,5,6,7,8,9,10,11,12,13)]
@@ -158,6 +161,12 @@ write.csv(seventeen_full_predict, file = "seventeen_final_full.csv")
 seventeen_predict <- predict(min_linear_model, min_data_frame)
 # Saving values in a csv file
 write.csv(seventeen_predict, file = "seventeen_final_min.csv")
+
+# Predict values for 2018 based on means of previous years for every player
+eighteen_predict_df <- data_players_seventeen_means[,c(3,4,5,6,7)]
+eighteen_predict <- predict(min_linear_model, eighteen_predict_df)
+# Saving values in a csv file
+write.csv(eighteen_predict, file = "eighteen_final_min.csv")
 
 
 
